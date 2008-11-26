@@ -1,0 +1,7 @@
+.project
+.pydevproject
+.tmp_*
+*.pyc
+local_database.db
+local_settings.py
+secret.key
