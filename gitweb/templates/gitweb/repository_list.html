@@ -1,0 +1,39 @@
+{% extends "gitweb/base.html" %}
+
+{% block content %}
+<h1>Repository list</h1>
+
+<dl>
+    {% for repo in repository_list %}
+    <dt><h3>{{ repo }}</h3></dt>
+    <dd>
+        Branches:
+            {% for branch in repo.branches %}
+                {% ifequal branch.name repo.active_branch %}
+                    {{ branch.name }} <em>(active)</em>,
+                {% else %}
+                    {{ branch.name }},
+                {% endifequal %}
+            {% endfor %}
+           <br/>
+        Tags: 
+        {% if repo.tags %}
+            {% for tag in repo.tags %}
+                {{ tag.name }}
+            {% endfor %}
+        {% else %}
+            <em>none</em>
+        {% endif %}
+        
+        <h4>Recent 3 commits:</h4>
+        <ul>
+            {% for commit in repo.recent_commits %}
+                <li>
+                    {{ commit.id|slice:":5" }}: {{ commit.message }}
+                </li>
+            {% endfor %}
+        </ul>
+    </dd>
+    {% endfor %}
+</dl>
+{% endblock %}
