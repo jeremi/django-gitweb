@@ -1,0 +1,41 @@
+{% extends "gitweb/base.html" %}
+
+{% block content %}
+<h1>Repository: {{ repository.title }} ({{ branch }}) -  {{ path }}</h1>
+{% if is_blob %}
+    <h4>mime: {{ tree.mime_type }}, mode: {{ tree.mode }}, name: {{ tree.name }}</h4>
+    <hr />
+    <pre>
+{{ tree.data }}
+    </pre>
+{% else %}
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Entry</th>
+        </tr>
+        {% if path %}
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <a href="{% url gitweb_repository_tree repository.pk,repository.slug,branch,prev_path %}">..</a>
+            </td>
+        </tr>
+        {% endif %}
+        {% for element in tree %}
+        <tr>
+            <td>
+                {% if element.e.mime_type %}
+                    File ({{ element.e.mime_type }})
+                {% else %}
+                    Directory
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url gitweb_repository_tree repository.pk,repository.slug,branch,element.path %}">{{ element.e.name }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

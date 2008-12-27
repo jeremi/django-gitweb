@@ -8,15 +8,17 @@
     <dt><h3>{{ repo }}</h3></dt>
     <dd>
         Branches:
-            {% for branch in repo.branches %}
-                {% ifequal branch.name repo.active_branch %}
-                    {{ branch.name }} <em>(active)</em>,
-                {% else %}
-                    {{ branch.name }},
-                {% endifequal %}
-            {% endfor %}
-           <br/>
-        Tags: 
+        {% for branch in repo.branches %}
+            <a href="{% url gitweb_repository_tree repo.pk,repo.slug,branch.name,"" %}">{{ branch.name }}</a>
+            {% ifequal branch.name repo.active_branch %}
+                <em>(active)</em>
+            {% endifequal %}
+            {% if not forloop.last %}
+                ,
+            {% endif %}
+        {% endfor %}
+        <br/>
+        Tags:
         {% if repo.tags %}
             {% for tag in repo.tags %}
                 {{ tag.name }}
@@ -28,9 +30,9 @@
         <h4>Recent 3 commits:</h4>
         <ul>
             {% for commit in repo.recent_commits %}
-                <li>
-                    {{ commit.id|slice:":5" }}: {{ commit.message }}
-                </li>
+            <li>
+                {{ commit.id }}: {{ commit.message }}
+            </li>
             {% endfor %}
         </ul>
     </dd>
