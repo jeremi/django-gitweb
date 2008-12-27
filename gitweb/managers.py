@@ -6,7 +6,7 @@ REPOSITORY_LOGGED_IN_FILTER = lambda u: Q(Q(is_public=True) | Q(member__user=u))
 
 class RepositoryManager(models.Manager):
     def visible_repositories_for_user(self, user=None):
-        if not user or not user.is_authenticated:
+        if not user or not user.is_authenticated():
             qset = REPOSITORY_PUBLIC_FILTER(user)
         else:
             qset = REPOSITORY_LOGGED_IN_FILTER(user)
