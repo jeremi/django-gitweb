@@ -51,14 +51,18 @@ class Repository(models.Model):
     @property
     def active_branch(self):
         return self.repo().active_branch
-
+    
     @property
     def tags(self):
         return self.repo().tags
     
     @property
     def recent_commits(self):
-        return self.repo().commits(max_count=getattr(settings, 'GITHUB_RECENT_COMMITS_COUNT', 3))
+        return self.repo().commits(max_count=getattr(settings, 'GITHUB_RECENT_COMMITS_COUNT', 10))
+    
+    @property
+    def last_commit(self):
+        return self.repo().commits(max_count=1)[0]
     
     class Meta:
         verbose_name = _('Repository')
