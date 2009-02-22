@@ -1,0 +1,26 @@
+<table class="repo_tree">
+   {% if path %}
+   <tr>
+      <td>Directory</td>
+       <td>&nbsp;</td>
+       <td>
+           <a href="{% url gitweb_repository_tree repository.pk,repository.slug,branch,prev_path %}">.. (parent directory)</a>
+       </td>
+   </tr>
+   {% endif %}
+   {% for element in tree %}
+   <tr>
+       <td>
+           {% if element.e.mime_type %}
+               File ({{ element.e.mime_type }})
+           {% else %}
+               Directory
+           {% endif %}
+       </td>
+       <td>{{ element.human_size }}</td>
+       <td>
+           <a href="{% url gitweb_repository_tree repository.pk,repository.slug,branch,element.path %}">{{ element.e.name }}</a>
+       </td>
+   </tr>
+   {% endfor %}
+</table>

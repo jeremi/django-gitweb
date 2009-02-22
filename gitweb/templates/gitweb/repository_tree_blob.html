@@ -1,0 +1,16 @@
+<div class="repo_blob_info">
+    <div class="key">filename</div><div class="value">{{ tree.name }}</div>
+    <div class="key">mime type</div><div class="value">{{ tree.mime_type }}</div>
+    <div class="key">size</div><div class="value">{{ blob_human_size }}</div>
+</div>
+<table class="repo_blob">
+    <tr>
+        <th>
+<pre class="code">{% for l in blob_lines %}<a href="#l{{ forloop.counter }}" id="l{{ forloop.counter }}">{{ forloop.counter }}</a>
+{% endfor %}</pre>
+        </th>
+        <td>
+            <pre class="code">{{ blob_pygmentized }}</pre>
+        </td>
+    </tr>
+</table>
