@@ -1,41 +1,30 @@
 {% extends "gitweb/base.html" %}
+{% load gitweb_tags %}
+
+{% block title %}Repository list{% endblock %}
+
+{% block header %}
+    <h1>Repository list</h1>
+{% endblock %}
 
 {% block content %}
-<h1>Repository list</h1>
-
-<dl>
+<table class="repo_list">
+    <tr class="head">
+        <th>Project</th>
+        <th>Description</th>
+        <th>Last Commit</th>
+        <th>&nbsp;</th>
+    </tr>
     {% for repo in repository_list %}
-    <dt><h3>{{ repo }}</h3></dt>
-    <dd>
-        Branches:
-        {% for branch in repo.branches %}
-            <a href="{% url gitweb_repository_tree repo.pk,repo.slug,branch.name,"" %}">{{ branch.name }}</a>
-            {% ifequal branch.name repo.active_branch %}
-                <em>(active)</em>
-            {% endifequal %}
-            {% if not forloop.last %}
-                ,
-            {% endif %}
-        {% endfor %}
-        <br/>
-        Tags:
-        {% if repo.tags %}
-            {% for tag in repo.tags %}
-                {{ tag.name }}
-            {% endfor %}
-        {% else %}
-            <em>none</em>
-        {% endif %}
-        
-        <h4>Recent 3 commits:</h4>
-        <ul>
-            {% for commit in repo.recent_commits %}
-            <li>
-                {{ commit.id }}: {{ commit.message }}
-            </li>
-            {% endfor %}
-        </ul>
-    </dd>
+    <tr class="{% cycle 'tr1' 'tr2' %}">
+        <td><a href="{% url gitweb_repository_summary repo.pk,repo.slug %}">{{ repo }}</a></td>
+        <td><a href="{% url gitweb_repository_summary repo.pk,repo.slug %}">{% if repo.description %}{{ repo.description }}{% else %}{{ repo.repo.description }}{% endif %}</a></td>
+        <td>{{ repo.last_commit.committed_date|time2datetime|timesince }}</td>
+        <td>
+            <a href="{% url gitweb_repository_summary repo.pk,repo.slug %}">summary</a>
+            <a href="{% url gitweb_repository_tree repo.pk,repo.slug,repo.active_branch,"" %}">tree</a>
+        </td>
+    </tr>
     {% endfor %}
-</dl>
+</table>
 {% endblock %}

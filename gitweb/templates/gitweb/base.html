@@ -1,6 +1,24 @@
 <html>
+    <head>
+        <title>{% block title %}django-gitweb{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}django-gitweb/screen.css" />
+    </head>
     <body>
+        <div class="header">
+            {% block header %}
+            <h1>django-gitweb</h1>
+            {% endblock %}
+        </div>
+        <div class="content_bg">
+        <div class="content">
         {% block content %}
         {% endblock %}
+        </div>
+        </div>
+        <div class="footer">
+            {% block footer %}
+            <h4>django-gitweb, {% now "r" %}</h4>
+            {% endblock %}
+        </div>
     </body>
 </html>
