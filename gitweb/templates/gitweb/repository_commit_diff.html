@@ -1,0 +1,49 @@
+{% extends "gitweb/base.html" %}
+{% load gitweb_tags %}
+
+{% block title %}Repository: {{ repository.title }} - Commit {{ commit.id_abbrev }}{% endblock %}
+
+{% block header %}
+    <h1>Repository: {{ repository.title }} - Commit {{ commit.id_abbrev }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="repo_commit">
+    <h3>{{ commit.message|truncatewords:8 }}</h3>
+</div>
+<div class="repo_commit">
+    <div class="key">committer</div><div class="value">{{ commit.committer.name }} &lt;{{ commit.committer.email }}&gt;</div>
+    <div class="value">{{ commit.committed_date|time2datetime }}</div>
+</div>
+<div class="repo_commit_message">
+    {{ commit.message|linebreaksbr }}
+</div>
+<table class="repo_diffs">
+    {% for diff in commit.diffs %}
+    <tr>
+        <td>{{ diff.a_path }}</td>
+        <td>
+            {% if diff.new_file %}[new file]{% endif %}
+            {% if diff.deleted_file %}[file deleted]{% endif %}
+        </td>
+        <td>
+            {% if not diff.new_file %}
+            <a href="#{{ diff.a_commit }}">patch</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% for diff in commit.diffs %}
+<a name="{{ diff.a_commit }}"></a>
+<h4>{{ diff.a_path }}</h4>
+<table class="repo_blob">
+    <tr>
+        <td>
+            <pre class="code">{{ diff.diff|pygmentize_diff }}</pre>
+        </td>
+    </tr>
+</table>
+{% endfor %}
+{% endblock %}
