@@ -57,7 +57,7 @@ class RepositoryManager(models.Manager):
                 result['errors'].append(entrie)
 
         # In the database but not on the filesystem, we log it
-        for repo_path in [ repo_path for repo_path in repositories if not os.path.isdir(os.path.join(repo_path, '.git')) ]:
+        for repo_path in [ repo_path for repo_path in repositories if  not (os.path.isdir(os.path.join(repository_path, '.git')) or repository_path.endswith(".git")) ]:
             respository = Repository.objects.get(path=repo_path)
             result['outdated'].append(entrie)
             logging.warning("the repository '%s' is not available on the filesystem" % respository.title)
