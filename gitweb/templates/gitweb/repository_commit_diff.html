@@ -4,7 +4,7 @@
 {% block title %}Repository: {{ repository.title }} - Commit {{ commit.id_abbrev }}{% endblock %}
 
 {% block header %}
-    <h1>Repository: <a href="{% url gitweb_repository_summary repository.slug %}">{{ repository.title }}</a> - Commit {{ commit.id_abbrev }}</h1>
+    <h1><a href="{% url gitweb_repository_list %}">Home</a> &gt; <a href="{% url gitweb_repository_summary repository.slug %}">{{ repository.title }}</a> - Commit {{ commit.id_abbrev }}</h1>
 {% endblock %}
 
 {% block content %}
