@@ -1,0 +1,29 @@
+{% extends "gitweb/base.html" %}
+{% load gitweb_tags %}
+
+{% block title %}Repository: {{ repository.title }} - {{ branch }}{% endblock %}
+
+{% block header %}
+    <h1><a href="{% url gitweb_repository_list %}">Home</a> &gt; <a href="{% url gitweb_repository_summary repository.slug %}">{{ repository.title }}</a> - {{ branch }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="repo_summary">
+    <div class="key">description</div><div class="value">{% if repository.description %}{{ repository.description }}{% else %}{{ repository.repo.description }}{% endif %}</div>
+</div-->
+<h3>recent commits</h3>
+<table class="repo_log">
+    {% for commit in logs %}
+    <tr>
+        <td>{{ commit.committed_date|time2datetime|conditional_timesince:7 }}</td>
+        <td>{{ commit.committer.name }}</td>
+        <td>{{ commit.message|truncatewords:8 }}</td>
+        <td>
+            <a href="{% url gitweb_repository_commit repository.slug,commit.id %}">commit</a>
+            <a href="{% url gitweb_repository_commit_diff repository.slug,commit.id %}">commitdiff</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

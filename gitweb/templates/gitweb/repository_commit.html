@@ -32,7 +32,7 @@
         </td>
         <td>
             {% if not diff.new_file %}
-            <a href="#">diff</a>
+            <a href="{% url gitweb_repository_commit_diff repository.slug,commit.id %}#{{ diff.a_commit }}">diff</a>
             <a href="#">history</a>
             {% endif %}
         </td>

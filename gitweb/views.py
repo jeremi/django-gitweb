@@ -1,3 +1,4 @@
+import logging
 import os
 
 from django.template.context import RequestContext
@@ -26,6 +27,30 @@ def repository_summary(request, slug, template_name='gitweb/repository_summary.h
 
     template_context = {
         'repository': repository,
+    }
+
+    return render_to_response(
+        template_name,
+        template_context,
+        RequestContext(request)
+    )
+
+def repository_log(request, slug, branch=None, template_name='gitweb/repository_log.html'):
+    try:
+        repository = Repository.objects.visible_repositories_for_user(request.user).get(slug=slug)
+    except Repository. Repository.DoesNotExist:
+        raise Http404
+    
+    if branch == None:
+        logs = repository.repo().log()
+        branch = "All"
+    else:
+        logs = repository.repo().log(branch)
+    
+    template_context = {
+        'repository': repository,
+        'branch':branch,
+        'logs': logs
     }
 
     return render_to_response(
