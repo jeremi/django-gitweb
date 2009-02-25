@@ -11,6 +11,7 @@
 <div class="repo_summary">
     <div class="key">description</div><div class="value">{% if repository.description %}{{ repository.description }}{% else %}{{ repository.repo.description }}{% endif %}</div>
     <div class="key">last change</div><div class="value">{{ repository.last_commit.committed_date|time2datetime }}</div>
+    <div class="key">clone</div><div class="value">git clone {{ clone_url }}</div>
 </div>
 <h3>recent commits</h3>
 <table class="repo_log">

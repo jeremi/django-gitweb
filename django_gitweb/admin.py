@@ -1,5 +1,5 @@
 from django.contrib import admin
-from gitweb.models import Member, Repository
+from .models import Member, Repository
 from .forms import RepositoryForm
 
 class MemberInline(admin.TabularInline):

@@ -1,12 +1,13 @@
 import logging
 import os
 
+from django.conf import settings
 from django.template.context import RequestContext
 from django.http import Http404
 from django.shortcuts import render_to_response
 
-from gitweb.utils import human_filesize, pygmentize
-from gitweb.models import Repository
+from .utils import human_filesize, pygmentize
+from .models import Repository
 
 def repository_list(request, template_name='gitweb/repository_list.html'):
     template_context = {
@@ -24,9 +25,12 @@ def repository_summary(request, slug, template_name='gitweb/repository_summary.h
         repository = Repository.objects.visible_repositories_for_user(request.user).get(slug=slug)
     except Repository.DoesNotExist:
         raise Http404
-
+    
+    clone_url = settings.GIT_CLONE_URL % os.path.split(repository.path)[1]
+    
     template_context = {
         'repository': repository,
+        'clone_url': clone_url,
     }
 
     return render_to_response(

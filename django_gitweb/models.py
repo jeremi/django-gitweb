@@ -98,7 +98,7 @@ class Repository(models.Model):
         return self.title
     
     def get_absolute_tree_url(self):
-        return reverse(viewname='gitweb.views.repository_summary',
+        return reverse(viewname='django_gitweb.views.repository_summary',
                        kwargs={'slug': self.slug})
     
     """

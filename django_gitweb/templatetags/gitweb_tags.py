@@ -1,7 +1,7 @@
 from django import template
 from django.utils.timesince import timesince
 from datetime import datetime, timedelta
-from gitweb.utils import pygmentize
+from django_gitweb.utils import pygmentize
 
 register = template.Library()
 
