@@ -82,6 +82,7 @@ INSTALLED_APPS = (
 )
 
 GIT_REPOSITORY = ""
+GIT_CLONE_URL = "git@example.com:%s"
 
 # Finally load the local settings if there's any
 try:
