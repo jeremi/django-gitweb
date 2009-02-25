@@ -1,7 +1,9 @@
+import os
+
 from django.template.context import RequestContext
 from django.http import Http404
 from django.shortcuts import render_to_response
-import os
+
 from gitweb.utils import human_filesize, pygmentize
 from gitweb.models import Repository
 
@@ -16,9 +18,9 @@ def repository_list(request, template_name='gitweb/repository_list.html'):
         RequestContext(request)
     )
 
-def repository_summary(request, id, slug, template_name='gitweb/repository_summary.html'):
+def repository_summary(request, slug, template_name='gitweb/repository_summary.html'):
     try:
-        repository = Repository.objects.visible_repositories_for_user(request.user).get(pk=id)
+        repository = Repository.objects.visible_repositories_for_user(request.user).get(slug=slug)
     except Repository.DoesNotExist:
         raise Http404
 
@@ -32,9 +34,9 @@ def repository_summary(request, id, slug, template_name='gitweb/repository_summa
         RequestContext(request)
     )
 
-def repository_tree(request, id, slug, branch, path, template_name='gitweb/repository_tree.html'):
+def repository_tree(request, slug, branch, path, template_name='gitweb/repository_tree.html'):
     try:
-        repository = Repository.objects.visible_repositories_for_user(request.user).get(pk=id)
+        repository = Repository.objects.visible_repositories_for_user(request.user).get(slug=slug)
     except Repository.DoesNotExist:
         raise Http404
 
@@ -71,9 +73,9 @@ def repository_tree(request, id, slug, branch, path, template_name='gitweb/repos
         RequestContext(request)
     )
 
-def repository_commit(request, id, slug, commit, template_name='gitweb/repository_commit.html'):
+def repository_commit(request, slug, commit, template_name='gitweb/repository_commit.html'):
     try:
-        repository = Repository.objects.visible_repositories_for_user(request.user).get(pk=id)
+        repository = Repository.objects.visible_repositories_for_user(request.user).get(slug=slug)
     except Repository.DoesNotExist:
         raise Http404
 

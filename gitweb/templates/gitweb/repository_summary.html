@@ -4,7 +4,7 @@
 {% block title %}Repository: {{ repository.title }}{% endblock %}
 
 {% block header %}
-    <h1>Repository: {{ repository.title }}</h1>
+    <h1>Repository: <a href="{% url gitweb_repository_summary repository.slug %}">{{ repository.title }}</a></h1>
 {% endblock %}
 
 {% block content %}
@@ -20,8 +20,8 @@
         <td>{{ commit.committer.name }}</td>
         <td>{{ commit.message|truncatewords:8 }}</td>
         <td>
-            <a href="{% url gitweb_repository_commit repository.pk,repository.slug,commit.id %}">commit</a>
-            <a href="{% url gitweb_repository_commit_diff repository.pk,repository.slug,commit.id %}">commitdiff</a>
+            <a href="{% url gitweb_repository_commit repository.slug,commit.id %}">commit</a>
+            <a href="{% url gitweb_repository_commit_diff repository.slug,commit.id %}">commitdiff</a>
             <a href="#">tree</a>
         </td>
     </tr>

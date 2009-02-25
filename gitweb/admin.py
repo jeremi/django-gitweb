@@ -11,5 +11,9 @@ class RepositoryAdmin(admin.ModelAdmin):
     save_on_top = True
     form = RepositoryForm
     inlines = (MemberInline,)
+    
+    def changelist_view(self, request):
+        sync_result = Repository.objects.sync_with_fs()
+        return super(RepositoryAdmin, self).changelist_view(request, { 'sync_result': sync_result })
 
 admin.site.register(Repository, RepositoryAdmin)

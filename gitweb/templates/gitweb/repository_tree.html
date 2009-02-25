@@ -1,7 +1,7 @@
 {% extends "gitweb/base.html" %}
 {% load gitweb_tags %}
 
-{% block title %}Repository: {{ repository.title }} - {{ branch }} - {{ path }}{% endblock %}
+{% block title %}Repository: <a href="{% url gitweb_repository_summary repository.slug %}">{{ repository.title }}</a> - {{ branch }} - {{ path }}{% endblock %}
 
 {% block header %}
     <h1>Repository: {{ repository.title }} - {{ branch }} -  {{ path }}</h1>

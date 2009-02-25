@@ -1,3 +1,4 @@
+import os
 # Django settings for example_project project.
 
 DEBUG = True
@@ -79,3 +80,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'gitweb',
 )
+
+GIT_REPOSITORY = ""
+
+# Finally load the local settings if there's any
+try:
+    from settings_local import *
+except ImportError:
+    import logging
+    logging.warn('', exc_info=True)

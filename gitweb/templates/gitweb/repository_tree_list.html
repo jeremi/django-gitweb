@@ -4,7 +4,7 @@
       <td>Directory</td>
        <td>&nbsp;</td>
        <td>
-           <a href="{% url gitweb_repository_tree repository.pk,repository.slug,branch,prev_path %}">.. (parent directory)</a>
+           <a href="{% url gitweb_repository_tree repository.slug,branch,prev_path %}">.. (parent directory)</a>
        </td>
    </tr>
    {% endif %}
@@ -19,7 +19,7 @@
        </td>
        <td>{{ element.human_size }}</td>
        <td>
-           <a href="{% url gitweb_repository_tree repository.pk,repository.slug,branch,element.path %}">{{ element.e.name }}</a>
+           <a href="{% url gitweb_repository_tree repository.slug,branch,element.path %}">{{ element.e.name }}</a>
        </td>
    </tr>
    {% endfor %}
