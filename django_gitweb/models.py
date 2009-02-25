@@ -40,7 +40,7 @@ class RepositoryManager(models.Manager):
             try:
                 #if there is no .git directory, so it's not a git repository
                 # so we simply skip it
-                if not os.path.isdir(os.path.join(repository_path, '.git')): continue
+                if not (os.path.isdir(os.path.join(repository_path, '.git')) or repository_path.endswith(".git")): continue
                 
                 defaults = dict(
                     title = entrie,
